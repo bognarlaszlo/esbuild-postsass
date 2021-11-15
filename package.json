@@ -1,0 +1,39 @@
+{
+  "name": "esbuild-postsass",
+  "version": "0.0.2",
+  "description": "An esbuild plugin for styling with SASS & PostCSS",
+  "keywords": [
+    "esbuild",
+    "esbuild-plugin",
+    "sass",
+    "scss",
+    "postcss"
+  ],
+  "main": "./dist/index",
+  "types": "./dist/index.d.ts",
+  "browser": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "ts-node .build/esbuild.ts && tsc --emitDeclarationOnly --outDir dist",
+    "prepublishOnly": "npm run build"
+  },
+  "author": "bognarlaszlo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bognarlaszlo/esbuild-postsass.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "postcss": "^8.3.11",
+    "sass": "^1.43.4"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7",
+    "esbuild": "^0.13.13",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  }
+}
