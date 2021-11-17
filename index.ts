@@ -12,7 +12,7 @@ const NAMESPACE = 'esbuild-postsass';
 const CONFIG: PluginOptions = {};
 
 const postSassPlugin = (options?: PluginOptions) => ({
-    name: 'esbuild-postscss',
+    name: NAMESPACE,
     setup: (build: PluginBuild) => {
         build.onResolve({filter: /\.(sass|scss)$/}, onResolveHandler)
         build.onLoad({filter: /.*/, namespace: NAMESPACE}, onLoadHandler)
