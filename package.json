@@ -1,6 +1,6 @@
 {
   "name": "esbuild-postsass",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "An esbuild plugin for styling with SASS & PostCSS",
   "keywords": [
     "esbuild",
