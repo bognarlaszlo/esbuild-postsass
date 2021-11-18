@@ -5,7 +5,8 @@ import postcss, {AcceptedPlugin} from 'postcss';
 import sass from 'sass';
 
 type PluginOptions = {
-    plugins?: AcceptedPlugin[]
+    postcssPlugins?: AcceptedPlugin[],
+    sassFunctions?: object
 }
 
 const NAMESPACE = 'esbuild-postsass';
@@ -14,6 +15,8 @@ const CONFIG: PluginOptions = {};
 const postSassPlugin = (options?: PluginOptions) => ({
     name: NAMESPACE,
     setup: (build: PluginBuild) => {
+        Object.assign(CONFIG, options);
+
         build.onResolve({filter: /\.(sass|scss)$/}, onResolveHandler)
         build.onLoad({filter: /.*/, namespace: NAMESPACE}, onLoadHandler)
     }
@@ -50,10 +53,11 @@ const onLoadHandler = async ({path}: OnLoadArgs): Promise<OnLoadResult> => {
 }
 
 const transform = async (file) => {
-    let {css, stats: {includedFiles}} = sass.renderSync({file, sourceMap: './tmp.css.map', sourceMapEmbed: true, sourcesContent: true});
+    let {css, stats: {includedFiles}} = sass.renderSync({file, functions: CONFIG.sassFunctions, sourceMap: './tmp.css.map', sourceMapEmbed: true, sourcesContent: true});
 
-    if (CONFIG.plugins.length) {
-        const result = await postcss(CONFIG.plugins).process(css, {from: undefined});
+    // No need to run PostCSS if no plugins...
+    if (CONFIG.postcssPlugins?.length) {
+        const result = await postcss(CONFIG.postcssPlugins).process(css, {from: undefined});
         css = result.css
     }
 
